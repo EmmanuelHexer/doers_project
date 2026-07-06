@@ -362,7 +362,7 @@ $memberships = $db->query("SELECT * FROM Membership_Type ORDER BY fee ASC")->fet
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="form-group">
-                        <label class="form-label">Fee (₱) *</label>
+                        <label class="form-label">Fee (₵) *</label>
                         <input type="number" name="fee" class="form-control" step="0.01" min="0" required>
                     </div>
                     <div class="form-group">
@@ -408,7 +408,7 @@ $memberships = $db->query("SELECT * FROM Membership_Type ORDER BY fee ASC")->fet
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="form-group">
-                        <label class="form-label">Fee (₱) *</label>
+                        <label class="form-label">Fee (₵) *</label>
                         <input type="number" name="fee" id="edit_fee" class="form-control" step="0.01" min="0" required>
                     </div>
                     <div class="form-group">

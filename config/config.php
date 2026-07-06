@@ -18,4 +18,4 @@ define('SESSION_TIMEOUT', 3600);
 define('MAX_LOGIN_ATTEMPTS', 5);
 define('LOGIN_LOCKOUT_TIME', 900);
 
-date_default_timezone_set('Asia/Manila');
+date_default_timezone_set('Africa/Accra');

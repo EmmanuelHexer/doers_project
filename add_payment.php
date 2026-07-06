@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Amount (₱) *</label>
+                                <label class="form-label">Amount (₵) *</label>
                                 <input type="number" name="amount" class="form-control" step="0.01" min="0.01" required>
                             </div>
                             <div class="form-group">

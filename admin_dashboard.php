@@ -88,7 +88,7 @@ $pending = $db->query("SELECT member_id, first_name, last_name, email, created_a
                 <div class="stat"><i class="fas fa-users"></i><div class="number"><?= $memberCount ?></div><div class="label">Total Members</div></div>
                 <div class="stat"><i class="fas fa-user-clock"></i><div class="number"><?= $pendingCount ?></div><div class="label">Pending Approvals</div></div>
                 <div class="stat"><i class="fas fa-chalkboard-teacher"></i><div class="number"><?= $instructorCount ?></div><div class="label">Instructors</div></div>
-                <div class="stat"><i class="fas fa-peso-sign"></i><div class="number"><?= formatCurrency($monthRevenue) ?></div><div class="label">This Month's Revenue</div></div>
+                <div class="stat"><i class="fas fa-money-bill-wave"></i><div class="number"><?= formatCurrency($monthRevenue) ?></div><div class="label">This Month's Revenue</div></div>
             </div>
 
             <div class="card animate-fade-in">

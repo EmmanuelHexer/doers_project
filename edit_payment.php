@@ -73,7 +73,7 @@ $active = 'payments';
                                         <option value="<?= $m['member_id'] ?>" <?= $payment['member_id']==$m['member_id']?'selected':'' ?>><?= htmlspecialchars($m['first_name'].' '.$m['last_name'].' ('.$m['email'].')') ?></option>
                                     <?php endforeach; ?>
                                 </select></div>
-                            <div class="form-group"><label class="form-label">Amount (₱) *</label><input type="number" name="amount" class="form-control" step="0.01" min="0.01" value="<?= htmlspecialchars($payment['amount']) ?>" required></div>
+                            <div class="form-group"><label class="form-label">Amount (₵) *</label><input type="number" name="amount" class="form-control" step="0.01" min="0.01" value="<?= htmlspecialchars($payment['amount']) ?>" required></div>
                             <div class="form-group"><label class="form-label">Payment Method *</label>
                                 <select name="payment_method" class="form-control" required>
                                     <?php foreach ($methods as $k=>$v): ?>

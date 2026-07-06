@@ -1,7 +1,7 @@
 <?php
 // includes/functions.php - FIXED VERSION
 function formatCurrency($amount) {
-    return '₱' . number_format($amount, 2);
+    return '₵' . number_format($amount, 2);
 }
 
 function timeAgo($datetime) {

@@ -194,6 +194,13 @@ $backupFiles = array_reverse($backupFiles);
                 </div>
             </nav>
 
+            <?php if (isset($_GET['restore'])): $r = $_GET['restore']; ?>
+                <div class="alert <?= $r === 'ok' ? 'alert-success' : 'alert-danger' ?>" style="margin-bottom:16px;">
+                    <i class="fas <?= $r === 'ok' ? 'fa-check-circle' : 'fa-exclamation-circle' ?>"></i>
+                    <?= $r === 'ok' ? 'Database restored successfully from backup.' : ($r === 'invalid' ? 'Invalid backup file.' : 'Restore failed. Please check the backup file.') ?>
+                </div>
+            <?php endif; ?>
+
             <div class="backup-stats animate-fade-in">
                 <div class="stat-box">
                     <div class="number"><?= count($backupFiles) ?></div>
@@ -249,12 +256,13 @@ $backupFiles = array_reverse($backupFiles);
                                     <a href="backup_download.php?file=<?= urlencode(basename($file)) ?>" class="btn-restore">
                                         <i class="fas fa-download"></i> Download
                                     </a>
-                                    <button class="btn-restore" onclick="if(confirm('Restore this backup? This will overwrite current data.')){alert('Restore initiated!');}">
-                                        <i class="fas fa-undo"></i> Restore
-                                    </button>
-                                    <button class="btn-delete-backup" onclick="if(confirm('Delete this backup?')){alert('Backup deleted!');}">
+                                    <form method="POST" action="backup_restore.php" style="display:inline;" onsubmit="return confirm('Restore this backup? This will OVERWRITE all current data.');">
+                                        <input type="hidden" name="file" value="<?= htmlspecialchars(basename($file)) ?>">
+                                        <button type="submit" class="btn-restore"><i class="fas fa-undo"></i> Restore</button>
+                                    </form>
+                                    <a href="backup_delete.php?file=<?= urlencode(basename($file)) ?>" class="btn-delete-backup" onclick="return confirm('Delete this backup?');">
                                         <i class="fas fa-trash"></i> Delete
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         <?php endforeach; ?>

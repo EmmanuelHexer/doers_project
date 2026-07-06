@@ -10,11 +10,26 @@ require_once 'includes/functions.php';
 
 $db = Database::getInstance()->getConnection();
 
+$search = trim($_GET['search'] ?? '');
+$status = $_GET['status'] ?? '';
+
 $sql = "SELECT p.*, CONCAT(m.first_name, ' ', m.last_name) as member_name, m.email as member_email
         FROM Payment p
         JOIN Members m ON p.member_id = m.member_id
-        ORDER BY p.payment_date DESC";
-$payments = $db->query($sql)->fetchAll();
+        WHERE 1=1";
+$params = [];
+if ($search !== '') {
+    $sql .= " AND (m.first_name LIKE ? OR m.last_name LIKE ? OR m.email LIKE ? OR p.reference_number LIKE ?)";
+    $params = array_merge($params, ["%$search%", "%$search%", "%$search%", "%$search%"]);
+}
+if ($status !== '') {
+    $sql .= " AND p.status = ?";
+    $params[] = $status;
+}
+$sql .= " ORDER BY p.payment_date DESC";
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
+$payments = $stmt->fetchAll();
 
 $totalRevenue = $db->query("SELECT SUM(amount) as total FROM Payment WHERE status = 'completed'")->fetch()['total'] ?? 0;
 $pendingPayments = $db->query("SELECT COUNT(*) as count FROM Payment WHERE status = 'pending'")->fetch()['count'] ?? 0;
@@ -178,6 +193,22 @@ $pendingPayments = $db->query("SELECT COUNT(*) as count FROM Payment WHERE statu
                     <i class="fas fa-plus"></i> Record Payment
                 </a>
             </div>
+
+            <form method="GET" class="filters animate-fade-in" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <input type="text" name="search" placeholder="Search by member, email or reference..." value="<?= htmlspecialchars($search) ?>"
+                       style="flex:1; min-width:220px; padding:8px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); background:var(--bg-input); color:var(--text-primary); font-size:0.875rem;">
+                <select name="status" onchange="this.form.submit()"
+                        style="padding:8px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); background:var(--bg-input); color:var(--text-primary); font-size:0.875rem;">
+                    <option value="">All Status</option>
+                    <?php foreach (['completed'=>'Completed','pending'=>'Pending','failed'=>'Failed','refunded'=>'Refunded'] as $k=>$v): ?>
+                        <option value="<?= $k ?>" <?= $status===$k?'selected':'' ?>><?= $v ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit" class="btn btn-primary" style="padding:8px 20px;"><i class="fas fa-search"></i> Search</button>
+                <?php if ($search !== '' || $status !== ''): ?>
+                    <a href="admin_payments.php" class="btn btn-outline" style="padding:8px 20px;">Clear</a>
+                <?php endif; ?>
+            </form>
 
             <div class="card animate-fade-in">
                 <div class="table-wrapper">

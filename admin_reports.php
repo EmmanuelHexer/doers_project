@@ -253,17 +253,17 @@ $instructorLoad = $db->query("SELECT CONCAT(i.first_name, ' ', i.last_name) as n
                     </div>
                     <div class="card-body">
                         <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <button class="btn btn-primary" style="width: 100%;" onclick="alert('Exporting members data...')">
+                            <a href="export_members.php" class="btn btn-primary" style="width: 100%; text-align:center;">
                                 <i class="fas fa-file-csv"></i> Export Members (CSV)
-                            </button>
-                            <button class="btn btn-success" style="width: 100%;" onclick="alert('Exporting payments data...')">
-                                <i class="fas fa-file-excel"></i> Export Payments (Excel)
-                            </button>
-                            <button class="btn btn-warning" style="width: 100%;" onclick="alert('Generating PDF report...')">
-                                <i class="fas fa-file-pdf"></i> Generate PDF Report
-                            </button>
+                            </a>
+                            <a href="export_payments.php" class="btn btn-success" style="width: 100%; text-align:center;">
+                                <i class="fas fa-file-excel"></i> Export Payments (CSV)
+                            </a>
+                            <a href="report_print.php" target="_blank" class="btn btn-warning" style="width: 100%; text-align:center;">
+                                <i class="fas fa-file-pdf"></i> Full Report (PDF / Print)
+                            </a>
                             <button class="btn btn-outline" style="width: 100%;" onclick="window.print()">
-                                <i class="fas fa-print"></i> Print Dashboard
+                                <i class="fas fa-print"></i> Print This Page
                             </button>
                         </div>
                     </div>
