@@ -77,7 +77,7 @@ $active = 'dashboard';
     <title>Dashboard - USTED-K Gym</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=2">
     <style>
         .welcome-card { background: var(--primary-gradient); border-radius: var(--radius-lg); padding: 32px; color: #fff; margin-bottom: 24px; }
         .welcome-card h2 { font-size: 1.75rem; margin-bottom: 4px; }

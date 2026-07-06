@@ -1072,20 +1072,24 @@ select.form-control option { background: var(--bg-dark); color: white; }
 .avatar-initial {
     width: 34px;
     height: 34px;
+    min-width: 34px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--primary-gradient);
-    color: #fff;
+    background-color: #FF6B00;               /* solid fallback so it never looks hollow */
+    background-image: var(--primary-gradient);
+    color: #fff !important;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     line-height: 1;
     text-transform: uppercase;
-    border: 2px solid var(--primary);
+    border: none;
+    object-fit: unset;
+    overflow: hidden;
     flex-shrink: 0;
     user-select: none;
 }
-.avatar-initial.avatar-sm { width: 36px; height: 36px; font-size: 0.85rem; }
-.avatar-initial.avatar-lg { width: 96px; height: 96px; font-size: 2.25rem; border-width: 3px; }
+.avatar-initial.avatar-sm { width: 36px; height: 36px; min-width: 36px; font-size: 0.9rem; }
+.avatar-initial.avatar-lg { width: 96px; height: 96px; min-width: 96px; font-size: 2.5rem; }
 .table tr:hover .avatar-initial.avatar-sm { transform: scale(1.1); transition: transform var(--transition-base); }
