@@ -34,15 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($firstName) || empty($lastName)) {
         $error = 'First name and last name are required.';
     } else {
-        $sql = "UPDATE Members SET first_name = ?, last_name = ?, telephone = ?, health_status = ? WHERE member_id = ?";
-        $stmt = $db->prepare($sql);
-        if ($stmt->execute([$firstName, $lastName, $telephone, $healthStatus, $member_id])) {
+        $update = $db->prepare("UPDATE Members SET first_name = ?, last_name = ?, telephone = ?, health_status = ? WHERE member_id = ?");
+        if ($update->execute([$firstName, $lastName, $telephone, $healthStatus, $member_id])) {
             $success = 'Profile updated successfully!';
-            // Refresh data
+            $_SESSION['member_name'] = $firstName . ' ' . $lastName;
+            // Refresh member data with the original SELECT (not the UPDATE query)
             $stmt = $db->prepare($sql);
             $stmt->execute([$member_id]);
             $member = $stmt->fetch();
-            $_SESSION['member_name'] = $firstName . ' ' . $lastName;
         } else {
             $error = 'Update failed. Please try again.';
         }
@@ -100,36 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="main-wrapper">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <img src="assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
-                <span>USTED-K Gym</span>
-            </div>
-            <nav class="sidebar-menu">
-                <div class="sidebar-menu-label">Main</div>
-                <a href="dashboard.php" class="sidebar-item">
-                    <i class="fas fa-th-large"></i> Dashboard
-                </a>
-                <a href="profile.php" class="sidebar-item active">
-                    <i class="fas fa-user"></i> My Profile
-                </a>
-                <a href="training.php" class="sidebar-item">
-                    <i class="fas fa-calendar-alt"></i> My Training
-                </a>
-                <a href="payments.php" class="sidebar-item">
-                    <i class="fas fa-credit-card"></i> Payments
-                </a>
-                <a href="book_session.php" class="sidebar-item">
-                    <i class="fas fa-calendar-plus"></i> Book Session
-                </a>
-                <a href="my_sessions.php" class="sidebar-item">
-                    <i class="fas fa-list"></i> My Sessions
-                </a>
-                <a href="logout.php" class="sidebar-item" style="color: #FF6B6B; margin-top: 20px;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </nav>
-        </aside>
+        <?php $active = 'profile'; include __DIR__ . '/includes/member_sidebar.php'; ?>
 
         <!-- Main -->
         <main class="main-content" id="mainContent">

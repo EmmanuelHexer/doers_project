@@ -12,12 +12,12 @@ require_once 'includes/functions.php';
 $db = Database::getInstance()->getConnection();
 $member_id = $_SESSION['member_id'];
 
-$sql = "SELECT ms.*, ts.*, tt.name as training_name, 
+$sql = "SELECT ts.*, ms.status as ms_status, ms.enrollment_date, tt.name as training_name,
         CONCAT(i.first_name, ' ', i.last_name) as instructor_name
         FROM Member_Section ms
         JOIN Training_Section ts ON ms.section_id = ts.section_id
         JOIN Training_Type tt ON ts.training_type_id = tt.training_type_id
-        JOIN Instructor i ON ts.instructor_id = i.instructor_id
+        LEFT JOIN Instructor i ON ts.instructor_id = i.instructor_id
         WHERE ms.member_id = ?
         ORDER BY FIELD(ts.day_of_week, 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'), ts.start_time";
 $stmt = $db->prepare($sql);
@@ -27,8 +27,8 @@ $sessions = $stmt->fetchAll();
 $activeCount = 0;
 $completedCount = 0;
 foreach ($sessions as $s) {
-    if ($s['status'] == 'active') $activeCount++;
-    if ($s['status'] == 'completed') $completedCount++;
+    if ($s['ms_status'] == 'active') $activeCount++;
+    if ($s['ms_status'] == 'completed') $completedCount++;
 }
 ?>
 <!DOCTYPE html>
@@ -133,36 +133,7 @@ foreach ($sessions as $s) {
 </head>
 <body>
     <div class="main-wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <img src="assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
-                <span>USTED-K Gym</span>
-            </div>
-            <nav class="sidebar-menu">
-                <div class="sidebar-menu-label">Main</div>
-                <a href="dashboard.php" class="sidebar-item">
-                    <i class="fas fa-th-large"></i> Dashboard
-                </a>
-                <a href="profile.php" class="sidebar-item">
-                    <i class="fas fa-user"></i> My Profile
-                </a>
-                <a href="training.php" class="sidebar-item">
-                    <i class="fas fa-calendar-alt"></i> My Training
-                </a>
-                <a href="payments.php" class="sidebar-item">
-                    <i class="fas fa-credit-card"></i> Payments
-                </a>
-                <a href="book_session.php" class="sidebar-item">
-                    <i class="fas fa-calendar-plus"></i> Book Session
-                </a>
-                <a href="my_sessions.php" class="sidebar-item active">
-                    <i class="fas fa-list"></i> My Sessions
-                </a>
-                <a href="logout.php" class="sidebar-item" style="color: #FF6B6B; margin-top: 20px;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </nav>
-        </aside>
+        <?php $active = 'sessions'; include __DIR__ . '/includes/member_sidebar.php'; ?>
 
         <main class="main-content" id="mainContent">
             <nav class="top-nav">

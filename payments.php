@@ -78,36 +78,7 @@ $totalPaid = $totalPaid->fetch()['total'] ?? 0;
 </head>
 <body>
     <div class="main-wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <img src="assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
-                <span>USTED-K Gym</span>
-            </div>
-            <nav class="sidebar-menu">
-                <div class="sidebar-menu-label">Main</div>
-                <a href="dashboard.php" class="sidebar-item">
-                    <i class="fas fa-th-large"></i> Dashboard
-                </a>
-                <a href="profile.php" class="sidebar-item">
-                    <i class="fas fa-user"></i> My Profile
-                </a>
-                <a href="training.php" class="sidebar-item">
-                    <i class="fas fa-calendar-alt"></i> My Training
-                </a>
-                <a href="payments.php" class="sidebar-item active">
-                    <i class="fas fa-credit-card"></i> Payments
-                </a>
-                <a href="book_session.php" class="sidebar-item">
-                    <i class="fas fa-calendar-plus"></i> Book Session
-                </a>
-                <a href="my_sessions.php" class="sidebar-item">
-                    <i class="fas fa-list"></i> My Sessions
-                </a>
-                <a href="logout.php" class="sidebar-item" style="color: #FF6B6B; margin-top: 20px;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </nav>
-        </aside>
+        <?php $active = 'payments'; include __DIR__ . '/includes/member_sidebar.php'; ?>
 
         <main class="main-content" id="mainContent">
             <nav class="top-nav">
