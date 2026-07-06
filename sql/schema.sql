@@ -152,6 +152,12 @@ CREATE TABLE Admin_Users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Default admin account so the admin panel is usable right after import.
+-- Login:  username = admin   |   password = admin123
+-- IMPORTANT: change this password after first login.
+INSERT INTO Admin_Users (username, password_hash, email, full_name, role, status)
+VALUES ('admin', '$2y$12$3CNT7CilV7si6dOIuI5cK.2VthwuCpotfNumUkjQqaGJWKhJU4l6u', 'admin@ustedk.com', 'System Administrator', 'super_admin', 'active');
+
 -- ============================================
 -- 10. SYSTEM LOGS TABLE
 -- ============================================
