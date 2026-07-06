@@ -26,3 +26,20 @@ function escape($string) {
 function formatDate($date, $format = 'M d, Y') {
     return date($format, strtotime($date));
 }
+
+// Initials for a letter-avatar: 2 letters from "First Last", else the first letter.
+function avatarInitials($text) {
+    $text = trim($text ?? '');
+    if ($text === '') return 'U';
+    $parts = preg_split('/\s+/', $text);
+    if (count($parts) >= 2 && $parts[1] !== '') {
+        return strtoupper(substr($parts[0], 0, 1) . substr($parts[1], 0, 1));
+    }
+    return strtoupper(substr($text, 0, 1));
+}
+
+// Renders a circular letter-avatar. $extraClass e.g. 'avatar-sm' or 'avatar-lg'.
+function avatarInitialTag($text, $extraClass = '') {
+    $cls = trim('avatar-initial ' . $extraClass);
+    return '<div class="' . $cls . '">' . htmlspecialchars(avatarInitials($text)) . '</div>';
+}

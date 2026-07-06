@@ -148,7 +148,7 @@ foreach ($sessions as $s) {
                 </div>
                 <div class="top-nav-right">
                     <div class="profile-dropdown">
-                        <img src="assets/images/default-avatar.png" alt="Profile">
+                        <div class="avatar-initial"><?= strtoupper(substr($_SESSION['member_username'] ?? 'U', 0, 1)) ?></div>
                         <div class="info">
                             <div class="name"><?= htmlspecialchars($_SESSION['member_name']) ?></div>
                             <div class="role">Member</div>

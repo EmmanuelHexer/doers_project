@@ -220,7 +220,7 @@ $trainingTypes = $db->query("SELECT training_type_id, name FROM Training_Type WH
                 </div>
                 <div class="top-nav-right">
                     <div class="profile-dropdown">
-                        <img src="assets/images/default-avatar.png" alt="Admin">
+                        <div class="avatar-initial"><?= strtoupper(substr($_SESSION['admin_username'] ?? 'A', 0, 1)) ?></div>
                         <div class="info">
                             <div class="name"><?= htmlspecialchars($_SESSION['admin_fullname'] ?? 'Admin') ?></div>
                             <div class="role"><?= ucfirst(str_replace('_', ' ', $_SESSION['admin_role'] ?? 'admin')) ?></div>

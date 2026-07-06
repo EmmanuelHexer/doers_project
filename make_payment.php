@@ -69,7 +69,7 @@ $active = 'make_payment';
                 </div>
                 <div class="top-nav-right">
                     <div class="profile-dropdown">
-                        <img src="assets/images/default-avatar.png" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($_SESSION['member_name']) ?>&background=FF6B00&color=fff'">
+                        <div class="avatar-initial"><?= strtoupper(substr($_SESSION['member_username'] ?? 'U', 0, 1)) ?></div>
                         <div class="info"><div class="name"><?= htmlspecialchars($_SESSION['member_name']) ?></div><div class="role">Member</div></div>
                     </div>
                 </div>

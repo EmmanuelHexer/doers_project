@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="top-nav-right">
                     <div class="profile-dropdown">
-                        <img src="assets/images/default-avatar.png" alt="Profile">
+                        <div class="avatar-initial"><?= strtoupper(substr($_SESSION['member_username'] ?? 'U', 0, 1)) ?></div>
                         <div class="info">
                             <div class="name"><?= htmlspecialchars($_SESSION['member_name']) ?></div>
                             <div class="role">Member</div>
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Profile Header -->
             <div class="profile-header animate-fade-in">
-                <img src="assets/images/default-avatar.png" class="avatar" alt="Profile">
+                <div class="avatar-initial avatar-lg"><?= strtoupper(substr($_SESSION['member_username'] ?? 'U', 0, 1)) ?></div>
                 <div class="info">
                     <h2><?= htmlspecialchars($member['first_name'] . ' ' . $member['last_name']) ?></h2>
                     <p><i class="fas fa-envelope"></i> <?= htmlspecialchars($member['email']) ?></p>
