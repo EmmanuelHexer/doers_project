@@ -1,13 +1,13 @@
 -- ============================================
 -- USTED-K GYM CENTER MANAGEMENT SYSTEM
--- Database: gymdatabase
+-- Database: gym_database
 -- Complete Schema with All Tables
 -- ============================================
 
 -- Drop database if exists (for fresh install)
-DROP DATABASE IF EXISTS gymdatabase;
-CREATE DATABASE gymdatabase;
-USE gymdatabase;
+DROP DATABASE IF EXISTS gym_database;
+CREATE DATABASE gym_database;
+USE gym_database;
 
 -- ============================================
 -- 1. MEMBERSHIP TYPE TABLE
