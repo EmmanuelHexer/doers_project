@@ -12,3 +12,6 @@
 # OS
 Thumbs.db
 .DS_Store
+
+# DB backups (generated at runtime)
+/backups/
