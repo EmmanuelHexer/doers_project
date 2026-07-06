@@ -8,7 +8,7 @@ class Database {
         $host = 'localhost';
         $database = 'gym_database';
         $username = 'root';
-        $password = '12345';
+        $password = '';
         
         try {
             $this->connection = new PDO(
