@@ -10,14 +10,22 @@ require_once 'includes/functions.php';
 
 $db = Database::getInstance()->getConnection();
 
-$sql = "SELECT ts.*, tt.name as training_name, 
+$search = trim($_GET['search'] ?? '');
+$sql = "SELECT ts.*, tt.name as training_name,
         CONCAT(i.first_name, ' ', i.last_name) as instructor_name,
         (SELECT COUNT(*) FROM Member_Section WHERE section_id = ts.section_id AND status = 'active') as enrolled_count
         FROM Training_Section ts
         LEFT JOIN Training_Type tt ON ts.training_type_id = tt.training_type_id
-        LEFT JOIN Instructor i ON ts.instructor_id = i.instructor_id
-        ORDER BY FIELD(ts.day_of_week, 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'), ts.start_time";
-$sections = $db->query($sql)->fetchAll();
+        LEFT JOIN Instructor i ON ts.instructor_id = i.instructor_id";
+$params = [];
+if ($search !== '') {
+    $sql .= " WHERE tt.name LIKE ? OR ts.day_of_week LIKE ? OR CONCAT(i.first_name,' ',i.last_name) LIKE ?";
+    $params = ["%$search%", "%$search%", "%$search%"];
+}
+$sql .= " ORDER BY FIELD(ts.day_of_week, 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'), ts.start_time";
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
+$sections = $stmt->fetchAll();
 
 // Get dropdown data
 $instructors = $db->query("SELECT instructor_id, first_name, last_name FROM Instructor WHERE status = 'active'")->fetchAll();
@@ -230,6 +238,13 @@ $trainingTypes = $db->query("SELECT training_type_id, name FROM Training_Type WH
                     <i class="fas fa-plus"></i> New Section
                 </button>
             </div>
+
+            <form method="GET" class="filters animate-fade-in" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <input type="text" name="search" placeholder="Search by training type, instructor or day..." value="<?= htmlspecialchars($search) ?>"
+                       style="flex:1; min-width:220px; padding:8px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); background:var(--bg-input); color:var(--text-primary); font-size:0.875rem;">
+                <button type="submit" class="btn btn-primary" style="padding:8px 20px;"><i class="fas fa-search"></i> Search</button>
+                <?php if ($search !== ''): ?><a href="admin_training_sections.php" class="btn btn-outline" style="padding:8px 20px;">Clear</a><?php endif; ?>
+            </form>
 
             <?php foreach ($sections as $section): ?>
             <div class="section-card animate-fade-in">

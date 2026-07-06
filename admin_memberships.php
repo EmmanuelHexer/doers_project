@@ -61,7 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Get all memberships
-$memberships = $db->query("SELECT * FROM Membership_Type ORDER BY fee ASC")->fetchAll();
+$search = trim($_GET['search'] ?? '');
+if ($search !== '') {
+    $stmt = $db->prepare("SELECT * FROM Membership_Type WHERE name LIKE ? OR description LIKE ? OR benefits LIKE ? ORDER BY fee ASC");
+    $stmt->execute(["%$search%", "%$search%", "%$search%"]);
+    $memberships = $stmt->fetchAll();
+} else {
+    $memberships = $db->query("SELECT * FROM Membership_Type ORDER BY fee ASC")->fetchAll();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -286,6 +293,13 @@ $memberships = $db->query("SELECT * FROM Membership_Type ORDER BY fee ASC")->fet
                     <i class="fas fa-plus"></i> Add Plan
                 </button>
             </div>
+
+            <form method="GET" class="filters animate-fade-in" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <input type="text" name="search" placeholder="Search plans by name, description or benefits..." value="<?= htmlspecialchars($search) ?>"
+                       style="flex:1; min-width:220px; padding:8px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); background:var(--bg-input); color:var(--text-primary); font-size:0.875rem;">
+                <button type="submit" class="btn btn-primary" style="padding:8px 20px;"><i class="fas fa-search"></i> Search</button>
+                <?php if ($search !== ''): ?><a href="admin_memberships.php" class="btn btn-outline" style="padding:8px 20px;">Clear</a><?php endif; ?>
+            </form>
 
             <?php if (isset($success)): ?>
                 <div class="alert alert-success animate-fade-in">
