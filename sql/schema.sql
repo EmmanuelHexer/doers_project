@@ -93,6 +93,7 @@ CREATE TABLE Members (
     password_hash VARCHAR(255) NOT NULL,
     health_status TEXT,
     membership_type_id INT,
+    index_number VARCHAR(50),
     profile_photo VARCHAR(255),
     registration_date DATE,
     status ENUM('pending','approved','suspended','expired') DEFAULT 'pending',
